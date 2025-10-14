@@ -1,8 +1,10 @@
 {
-  "panel_type": "",
+  "system_type": "GD",
   "serial_port": "/dev/ttyUSB0",
-  "telegram_token": "",
-  "telegram_chat_id": "",
-  "zones": {},
-  "users": {}
+  "baudrate": 9600,
+  "databits": 8,
+  "parity": "None",
+  "stopbits": 1,
+  "bot_token": "",
+  "chat_ids": []
 }
