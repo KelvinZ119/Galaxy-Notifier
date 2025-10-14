@@ -11,3 +11,8 @@ git clone https://github.com/<jouw-gebruiker>/galaxy-notifier.git
 cd galaxy-notifier
 chmod +x install.sh
 ./install.sh
+
+
+om opnieuw te configureren:
+
+python3 ~/galaxy-notifier/setup.py
