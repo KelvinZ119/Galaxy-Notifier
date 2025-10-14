@@ -18,7 +18,7 @@ cp config_template.json "$PROJECT_DIR/galaxy_config.json"
 cp -r systemd "$PROJECT_DIR/systemd"
 
 # Installeer Python dependencies
-pip3 install --user pyserial requests
+pip3 install --break-system-packages -r requirements.txt
 
 # Maak systemd servicebestand
 sudo cp systemd/galaxy-listener.service /etc/systemd/system/galaxy-listener.service
