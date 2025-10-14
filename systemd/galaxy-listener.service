@@ -3,7 +3,7 @@ Description=Galaxy RS232 SIA Listener met Telegram
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/python3 /home/pi/galaxy-notifier/start_listener.py
+ExecStart=/usr/bin/python3 /home/pi/Galaxy-Notifier/start_listener.py
 WorkingDirectory=/home/pi/galaxy-notifier
 StandardOutput=inherit
 StandardError=inherit
