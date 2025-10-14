@@ -8,7 +8,7 @@ sudo apt update
 sudo apt install -y python3 python3-pip python3-serial
 
 # Map voor het project
-PROJECT_DIR="$HOME/galaxy-notifier"
+PROJECT_DIR="$HOME/Galaxy-Notifier"
 mkdir -p "$PROJECT_DIR"
 
 # Kopieer alle bestanden
@@ -24,7 +24,7 @@ pip3 install --break-system-packages -r requirements.txt
 sudo cp systemd/galaxy-listener.service /etc/systemd/system/galaxy-listener.service
 
 # Pas ExecStart pad aan in service naar jouw projectmap
-sudo sed -i "s|/home/pi/GalaxyListener.py|$HOME/galaxy-notifier/GalaxyListener.py|g" /etc/systemd/system/galaxy-listener.service
+sudo sed -i "s|/home/pi/GalaxyListener.py|$HOME/Galaxy-Notifier/GalaxyListener.py|g" /etc/systemd/system/galaxy-listener.service
 
 # Herlaad en start service
 sudo systemctl daemon-reload
