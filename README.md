@@ -13,3 +13,7 @@ sudo apt update && sudo apt install -y git && git clone https://github.com/Kelvi
 om opnieuw te configureren:
 
 python3 ~/galaxy-notifier/setup.py
+
+
+voor GD usb adapter staat standaard goed.
+voor Flex usb adapter moet zijn "/dev/ttyACM0"
