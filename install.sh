@@ -7,28 +7,21 @@ echo "Starte installatie Galaxy Notifier..."
 sudo apt update
 sudo apt install -y python3 python3-pip python3-serial
 
-# Map voor het project
+# Pad naar projectmap
 PROJECT_DIR="$HOME/Galaxy-Notifier"
-mkdir -p "$PROJECT_DIR"
-
-# Kopieer alle bestanden
-cp setup.py "$PROJECT_DIR/"
-cp GalaxyListener.py "$PROJECT_DIR/"
-cp config_template.json "$PROJECT_DIR/galaxy_config.json"
-cp -r systemd "$PROJECT_DIR/systemd"
 
 # Installeer Python dependencies
-pip3 install --break-system-packages -r requirements.txt
+pip3 install --break-system-packages -r "$PROJECT_DIR/requirements.txt"
 
-# Maak systemd servicebestand
-sudo cp systemd/galaxy-listener.service /etc/systemd/system/galaxy-listener.service
+# Zet systemd service
+sudo cp "$PROJECT_DIR/systemd/galaxy-listener.service" /etc/systemd/system/galaxy-listener.service
 
 # Pas ExecStart pad aan in service naar jouw projectmap
-sudo sed -i "s|/home/pi/GalaxyListener.py|$HOME/Galaxy-Notifier/GalaxyListener.py|g" /etc/systemd/system/galaxy-listener.service
+sudo sed -i "s|/home/pi/GalaxyListener.py|$PROJECT_DIR/GalaxyListener.py|g" /etc/systemd/system/galaxy-listener.service
 
 # Herlaad en start service
 sudo systemctl daemon-reload
 sudo systemctl enable galaxy-listener.service
 sudo systemctl restart galaxy-listener.service
 
-echo "Installatie voltooid. Run 'python3 ~/galaxy-notifier/setup.py' om te configureren."
+echo "Installatie voltooid. Run 'python3 $PROJECT_DIR/setup.py' om te configureren."
