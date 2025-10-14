@@ -17,9 +17,7 @@ with open(CONFIG_FILE) as f:
 # Telegram instellingen
 BOT_TOKEN = cfg["bot_token"]
 chat_ids_raw = cfg["chat_ids"]
-CHAT_IDS = (
-    [int(cid.strip()) for cid in chat_ids_raw.split(",")] if isinstance(chat_ids_raw, str) else chat_ids_raw
-)
+CHAT_IDS = [int(cid) for cid in chat_ids_raw]
 
 ser = serial.Serial(
     cfg["serial_port"],
