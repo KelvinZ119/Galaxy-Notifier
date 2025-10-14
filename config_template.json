@@ -1,0 +1,12 @@
+{
+  "serial_port": "/dev/ttyUSB0",
+  "baudrate": 9600,
+  "bytesize": 8,
+  "parity": "N",
+  "stopbits": 1,
+  "bot_token": "JOUW-BOT-TOKEN-HIER",
+  "chat_ids": ["123456789"],
+  "network": {
+    "type": "dhcp"
+  }
+}
