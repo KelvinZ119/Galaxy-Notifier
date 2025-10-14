@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 ExecStart=/usr/bin/python3 /home/pi/Galaxy-Notifier/start_listener.py
-WorkingDirectory=/home/pi/galaxy-notifier
+WorkingDirectory=/home/pi/Galaxy-Notifier
 StandardOutput=inherit
 StandardError=inherit
 Restart=always
