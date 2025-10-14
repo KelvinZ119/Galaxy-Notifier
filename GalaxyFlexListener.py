@@ -1,57 +1,44 @@
-# Galaxy Flex USB Listener (Microtech Protocol)
-# Kelvin-config compatible
-
+#!/usr/bin/env python3
 import serial
+import requests
+import re
 import json
-import time
 import os
-import sys
-import datetime
-from pathlib import Path
+import time
 
-CONFIG_PATH = Path.home() / "galaxy-notifier" / "config.json"
+CONFIG_FILE = os.path.expanduser("~/Galaxy-Notifier/galaxy_config.json")
+if not os.path.exists(CONFIG_FILE):
+    print("Configuratie niet gevonden! Run setup.py eerst.")
+    exit(1)
 
-def load_config():
-    if not CONFIG_PATH.exists():
-        print("[!] Config bestand niet gevonden. Draai eerst setup.py.")
-        sys.exit(1)
-    with open(CONFIG_PATH) as f:
-        return json.load(f)
+with open(CONFIG_FILE) as f:
+    cfg = json.load(f)
 
-def log(msg):
-    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    print(f"[{timestamp}] {msg}")
+BOT_TOKEN = cfg["bot_token"]
+CHAT_IDS = cfg["chat_ids"]
 
-def main():
-    config = load_config()
+ser = serial.Serial(cfg["serial_port"], baudrate=9600, timeout=1)
 
-    if config.get("protocol") != "flex":
-        print("[!] Deze listener is alleen bedoeld voor Flex (Microtech USB). Protocol in config.json moet 'flex' zijn.")
-        sys.exit(1)
+def send_to_telegram(message):
+    url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
+    for chat_id in CHAT_IDS:
+        try:
+            requests.post(url, data={"chat_id": chat_id, "text": message})
+        except Exception as e:
+            print(f"Telegram-fout voor {chat_id}:", e)
 
-    port = config.get("serial_port", "/dev/ttyACM0")
-    baudrate = int(config.get("baudrate", 9600))
+print("Galaxy Flex listener actief...")
 
+while True:
     try:
-        ser = serial.Serial(port, baudrate=baudrate, timeout=1)
-        log(f"Luistert op {port} @ {baudrate} baud...")
-    except serial.SerialException as e:
-        log(f"Fout bij openen van seriele poort: {e}")
-        sys.exit(1)
+        data = ser.readline()
+        if not data:
+            continue
 
-    try:
-        while True:
-            line = ser.readline().decode(errors='ignore').strip()
-            if line:
-                log(f"Flex: {line}")
-                # Hier kun je parsing toevoegen als je weet welk formaat het is
-                # Bijvoorbeeld split op komma’s als het ASCII is: evt,zone,user,etc.
+        msg = data.decode(errors="ignore").strip()
+        print("[Flex Input]", msg)
+        send_to_telegram(f"📡 Flex: {msg}")
 
-            time.sleep(0.1)
-    except KeyboardInterrupt:
-        log("Afsluiten...")
-    finally:
-        ser.close()
-
-if __name__ == '__main__':
-    main()
+    except Exception as e:
+        print("Fout:", e)
+        time.sleep(1)
