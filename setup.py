@@ -3,7 +3,7 @@ import json
 import os
 
 CONFIG_PATH = os.path.expanduser("~/galaxy-notifier/config.json")
-CONFIG_TEMPLATE_PATH = os.path.expanduser("~/galaxy-notifier/config_template.json")
+CONFIG_TEMPLATE_PATH = os.path.expanduser("~/Galaxy-Notifier/config_template.json")
 
 def load_config_template():
     with open(CONFIG_TEMPLATE_PATH, "r") as f:
