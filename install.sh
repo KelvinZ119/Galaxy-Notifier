@@ -23,7 +23,7 @@ sudo sed -i "s|/home/pi/GalaxyListener.py|$PROJECT_DIR/GalaxyListener.py|g" /etc
 sudo systemctl daemon-reload
 sudo systemctl enable galaxy-listener.service
 sudo systemctl restart galaxy-listener.service
-cp "$PROJECT_DIR/config_template.json" "$PROJECT_DIR/config_template.json"
+cp "$PWD/config_template.json" "$PROJECT_DIR/config_template.json"
 
 
 echo "Installatie voltooid. Run 'python3 $PROJECT_DIR/setup.py' om te configureren."
